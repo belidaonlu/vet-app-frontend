@@ -1,0 +1,46 @@
+.home-container {
+  text-align: center;
+  padding: 20px;
+}
+  
+h2 {
+  color: #673ab7; /* deepPurple */
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+  
+h1 {
+  color: #8bc34a; /* lightGreen */
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
+  
+.vet-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border-radius: 16px;
+  box-shadow: 0 4px 4px 0 rgba(142, 142, 142, 0.3), 0 10px 10px 0 rgba(142, 142, 142, 0.3);
+
+}
+
+.greeting {
+  color: #673ab7;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: start;
+  gap: 10px;
+  margin: auto;
+}
+
+.greeting span {
+  margin-top: 40px;
+}
+
+
+  

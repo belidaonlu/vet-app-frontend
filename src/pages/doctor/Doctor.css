@@ -1,0 +1,108 @@
+.container {
+    max-width: 100%;
+    max-height: 200vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h3 {
+    margin: 0 auto 0 auto;
+    text-align: center;
+}
+
+.container h2 {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    color: #7e57c2;
+}
+
+.title-doctor {
+    margin: 80px 0 0 30px;
+}
+
+.title-available {
+    margin: 20px 0 0 30px;
+}
+
+.content-doc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    margin: 50px 30px 10px 30px;
+    border: 1px solid #f1f8e9;
+    border-radius: 16px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.content-available {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+    margin: 50px 30px 10px 30px;
+    border: 1px solid #f1f8e9;
+    border-radius: 16px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.add-doc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 25px 0 0 0;
+}
+
+.input-doc {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin: 20px 0 0 0;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-add-doc {
+    font: inherit;
+    letter-spacing: inherit;
+    color: white;
+    padding: 4px 0 5px;
+    border: 0;
+    border-radius: 10px;
+    box-sizing: content-box;
+    background: #7cb342;
+    height: 1.4375em;
+    margin: 0;
+    display: block;
+    min-width: 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+.btn-add:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.section-doc2 {
+    width: 100%;
+    border: 1px solid rgb(255, 101, 101);
+    display: flex;
+    /* flex-wrap: wrap; */
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin: 10px 0;
+}
+
+.doc-list-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+
+
