@@ -24,7 +24,15 @@ function Vaccination() {
     code: "",
     protectionStartDate: null,
     protectionFinishDate: null,
-    animal: {},
+    animalWithoutCustomer: {
+      id: null,
+      name: "",
+      species: "",
+      breed: "",
+      gender: "",
+      dateOfBirth: null,
+      colour: ""
+    }
   });
 
   const [alert, setAlert] = useState(null);
@@ -41,11 +49,24 @@ function Vaccination() {
       .then((res) => {
         setVaccination(res.data.content);
         setFilteredVaccination(res.data.content);
+      })
+      .catch((error) => {
+        console.error("Aşı Verisi Çekme Hatası:", error);
+        console.error("Hata Yanıtı:", error.response);
+        console.error("Hata İsteği:", error.request);
+        console.error("Hata Mesajı:", error.message);
       });
+
     axios
       .get(`${import.meta.env.VITE_APP_BASEURL}api/v1/animals`)
       .then((res) => {
         setAnimal(res.data.content);
+      })
+      .catch((error) => {
+        console.error("Hayvan Verisi Çekme Hatası:", error);
+        console.error("Hata Yanıtı:", error.response);
+        console.error("Hata İsteği:", error.request);
+        console.error("Hata Mesajı:", error.message);
       });
   }, [update]);
 
@@ -56,15 +77,31 @@ function Vaccination() {
     setFilteredVaccination(vaccination.filter((vac) => vac.animal.id === id));
     setNewVaccination((prev) => ({
       ...prev,
-      animal: selectedAnimal || {},
+      animalWithoutCustomer: selectedAnimal || {
+        id: null,
+        name: "",
+        species: "",
+        breed: "",
+        gender: "",
+        dateOfBirth: null,
+        colour: ""
+      },
     }));
   };
 
   const handleDateChange = (date, field) => {
     if (field === "startDate") {
       setStartDate(date);
+      setNewVaccination((prev) => ({
+        ...prev,
+        protectionStartDate: date
+      }));
     } else {
       setEndDate(date);
+      setNewVaccination((prev) => ({
+        ...prev,
+        protectionFinishDate: date
+      }));
     }
   };
 
@@ -72,15 +109,17 @@ function Vaccination() {
     const vaccinationData = {
       name: newVaccination.name,
       code: newVaccination.code,
-      protectionStartDate: newVaccination.protectionStartDate,
-      protectionFinishDate: newVaccination.protectionFinishDate,
-      animal: newVaccination.animal,
+      protectionStartDate: newVaccination.protectionStartDate ? newVaccination.protectionStartDate.format('YYYY-MM-DD') : null,
+      protectionFinishDate: newVaccination.protectionFinishDate ? newVaccination.protectionFinishDate.format('YYYY-MM-DD') : null,
+      animalWithoutCustomer: newVaccination.animalWithoutCustomer,
     };
+
+    console.log('Gönderilen Veri:', vaccinationData);
 
     if (isEditMode) {
       axios
         .put(`${import.meta.env.VITE_APP_BASEURL}api/v1/vaccinations/${newVaccination.id}`, vaccinationData)
-        .then(() => setUpdate(false))
+        .then(() => setUpdate(!update))
         .then(() => setIsEditMode(false))
         .then(() =>
           setNewVaccination({
@@ -89,19 +128,30 @@ function Vaccination() {
             code: "",
             protectionStartDate: null,
             protectionFinishDate: null,
-            animal: {},
+            animalWithoutCustomer: {
+              id: null,
+              name: "",
+              species: "",
+              breed: "",
+              gender: "",
+              dateOfBirth: null,
+              colour: ""
+            }
           })
         )
         .then(() => setAlert({ type: 'success', message: 'Aşı başarıyla güncellendi.' }))
         .catch((error) => {
           console.error("Güncelleme Hatası:", error);
-          setAlert({ type: 'error', message: `Hata: ${error.response.data.message || error.response.data}` });
+          console.error("Hata Yanıtı:", error.response);
+          console.error("Hata İsteği:", error.request);
+          console.error("Hata Mesajı:", error.message);
+          setAlert({ type: 'error', message: `Hata: ${error.response?.data?.message || error.message}` });
         });
     } else {
       axios
         .post(`${import.meta.env.VITE_APP_BASEURL}api/v1/vaccinations`, vaccinationData)
         .then((res) => setVaccination([...vaccination, res.data]))
-        .then(() => setUpdate(false))
+        .then(() => setUpdate(!update))
         .then(() =>
           setNewVaccination({
             id: null,
@@ -109,13 +159,24 @@ function Vaccination() {
             code: "",
             protectionStartDate: null,
             protectionFinishDate: null,
-            animal: {},
+            animalWithoutCustomer: {
+              id: null,
+              name: "",
+              species: "",
+              breed: "",
+              gender: "",
+              dateOfBirth: null,
+              colour: ""
+            }
           })
         )
         .then(() => setAlert({ type: 'success', message: 'Aşı başarıyla eklendi.' }))
         .catch((error) => {
           console.error("Ekleme Hatası:", error);
-          setAlert({ type: 'error', message: `Hata: ${error.response.data.message || error.response.data}` });
+          console.error("Hata Yanıtı:", error.response);
+          console.error("Hata İsteği:", error.request);
+          console.error("Hata Mesajı:", error.message);
+          setAlert({ type: 'error', message: `Hata: ${error.response?.data?.message || error.message}` });
         });
     }
   };
@@ -124,8 +185,15 @@ function Vaccination() {
     const id = e.currentTarget.id;
     axios
       .delete(`${import.meta.env.VITE_APP_BASEURL}api/v1/vaccinations/${id}`)
-      .then(() => setUpdate(false))
-      .then(() => setAlert({ type: 'warning', message: 'Aşı silindi.' }));
+      .then(() => setUpdate(!update))
+      .then(() => setAlert({ type: 'warning', message: 'Aşı silindi.' }))
+      .catch((error) => {
+        console.error("Silme Hatası:", error);
+        console.error("Hata Yanıtı:", error.response);
+        console.error("Hata İsteği:", error.request);
+        console.error("Hata Mesajı:", error.message);
+        setAlert({ type: 'error', message: `Hata: ${error.response?.data?.message || error.message}` });
+      });
   };
 
   const handleUpdateVaccinationBtn = (e) => {
@@ -136,7 +204,15 @@ function Vaccination() {
       ...vac,
       protectionStartDate: dayjs(vac.protectionStartDate),
       protectionFinishDate: dayjs(vac.protectionFinishDate),
-      animal: animal.find(a => a.id === vac.animal.id) || {},
+      animalWithoutCustomer: {
+        id: vac.animal.id,
+        name: vac.animal.name,
+        species: vac.animal.species,
+        breed: vac.animal.breed,
+        gender: vac.animal.gender,
+        dateOfBirth: dayjs(vac.animal.dateOfBirth),
+        colour: vac.animal.colour
+      }
     });
     setIsEditMode(true);
   };
@@ -156,6 +232,9 @@ function Vaccination() {
         .then((res) => setFilteredVaccination(res.data.content))
         .catch((error) => {
           console.error("Search Error:", error);
+          console.error("Hata Yanıtı:", error.response);
+          console.error("Hata İsteği:", error.request);
+          console.error("Hata Mesajı:", error.message);
           setFilteredVaccination([]);
         });
     }
@@ -207,7 +286,7 @@ function Vaccination() {
               <DatePicker
                 label="Koruma Başlangıç Tarihi"
                 value={newVaccination.protectionStartDate}
-                onChange={(date) => setNewVaccination({ ...newVaccination, protectionStartDate: date })}
+                onChange={(date) => handleDateChange(date, "startDate")}
                 disablePast
                 views={['year', 'month', 'day']}
                 format="YYYY-MM-DD"
@@ -219,7 +298,7 @@ function Vaccination() {
               <DatePicker
                 label="Koruma Bitiş Tarihi"
                 value={newVaccination.protectionFinishDate}
-                onChange={(date) => setNewVaccination({ ...newVaccination, protectionFinishDate: date })}
+                onChange={(date) => handleDateChange(date, "endDate")}
                 disablePast
                 views={['year', 'month', 'day']}
                 format="YYYY-MM-DD"
@@ -230,7 +309,7 @@ function Vaccination() {
             <Select
               labelId="Animal"
               id="AnimalSelect"
-              value={newVaccination.animal.id || ""}
+              value={newVaccination.animalWithoutCustomer.id || ""}
               onChange={handleAnimalSelectChange}
               sx={{ width: 192, height: 50 }}
               displayEmpty
