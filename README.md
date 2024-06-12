@@ -4,7 +4,7 @@
 https://vet-app-frontend-hmmx.vercel.app/
 
 ## BACKEND GITHUB LINKI:
-https://github.com/belidaonlu/Vet-App_Backend
+https://github.com/belidaonlu/vet-app-backend
 
 ## Veteriner Yönetim Sistemi 
 
