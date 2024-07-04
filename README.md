@@ -18,3 +18,22 @@ Bu projeyi çalıştırmak için aşağıdaki ortam değişkenini kullanmalisini
 
 VITE_APP_BASEURL
 
+
+
+# VETAPP
+## FRONTEND LIVE LINK:
+https://vet-app-frontend-hmmx.vercel.app/
+
+## BACKEND GITHUB LINK:
+https://github.com/belidaonlu/vet-app-backend
+
+## Veterinary Management System
+The Veterinary Management System is a site created to organize and manage the daily operations of veterinary clinics. This site allows veterinary staff to manage veterinary doctors, clients, animals, vaccinations, and appointments.
+
+It is developed with React and deployed with Netlify.
+
+## Environment Variables (.ENV)
+To run this project, you need to use the following environment variable:
+
+VITE_APP_BASEURL
+
